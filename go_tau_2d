@@ -1,0 +1,17 @@
+ #!/bin/bash -l
+
+
+#$ -cwd
+#$ -j y
+#$ -S /bin/bash
+
+module load gcc
+folder="Tau_test/2d_tau"
+echo "${folder}"
+mkdir -p "${folder}"
+rm -f ${folder}/*.dat
+
+
+rm const_kd_tau
+gcc -Wall -O3 Gillespie_2D_TauLeap.c dSFMT.c -o tau_2d -lm
+./tau_2d 0 300 0 $folder 

@@ -1,0 +1,16 @@
+ #!/bin/bash -l
+
+
+#$ -cwd
+#$ -j y
+#$ -S /bin/bash
+
+module load gcc
+folder="Report/1d_u_om_9"
+echo "${folder}"
+mkdir -p "${folder}"
+rm -f ${folder}/*.dat
+
+rm tleap
+gcc -Wall -O3 Gillespie_1D_Strain_constkd_TauLeap.c dSFMT.c -o tleap -lm
+./tleap 5000 500 -0.05 $folder

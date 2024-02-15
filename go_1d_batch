@@ -1,0 +1,26 @@
+ #!/bin/bash -l
+
+
+#$ -cwd
+#$ -j y
+#$ -S /bin/bash
+
+module load gcc
+
+rm tleap
+gcc -Wall -O3 Gillespie_1D_Strain_constkd_TauLeap.c dSFMT.c -o tleap -lm
+
+prf=(0 500 1000 2000 3000 4000 5000 6000 7000 8100)
+exps=(2000)
+shft=(0.0 0.005 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.075)
+names=("Report7/1d_u_om_0" "Report7/1d_u_om_1" "Report7/1d_u_om_2" "Report7/1d_u_om_3" "Report7/1d_u_om_4" "Report7/1d_u_om_5" "Report7/1d_u_om_6" "Report7/1d_u_om_7" "Report7/1d_u_om_8" "Report7/1d_u_om_9")
+
+for i in ${!prf[*]}; do
+
+echo "${names[$i]}"
+mkdir -p "${names[$i]}"
+rm -f ${names[$i]}/*.dat
+
+./tleap ${prf[$i]} 125 0 ${names[$i]}
+
+done
