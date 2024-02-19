@@ -226,7 +226,7 @@ int main(int argc, char **argv){
         double cs, a0;
         double r1, r2;
         double r2a0, tau;
-        long int cs_cnt;
+        long int cs_cnt, crit_cnt;
 
         int ar_len = 50000;
         double stress[ar_len];
@@ -367,8 +367,6 @@ int main(int argc, char **argv){
 
             if(tau_prime < zeta/a0){
 
-                //printf("What's the fucking point\n");
-
                 r1 = dsfmt_genrand_open_open(&dsfmt);
                 r2 = dsfmt_genrand_open_open(&dsfmt);
 
@@ -442,14 +440,17 @@ int main(int argc, char **argv){
                             cs_cnt++;
                         }
                         cs_cnt--;
+			    
+			if(cs_cnt < 0){printf("Negative cs_cnt\n");exit(0);}
+			crit_cnt = crit[cs_cnt];
 
-                        if(V[cs_cnt] < 0){
+                        if(V[crit_cnt] < 0){
                             X_temp[0]++;
-                            X_temp[-V[cs_cnt]]--;
+                            X_temp[-V[crit_cnt]]--;
                         }
                         else{
                             X_temp[0]--;
-                            X_temp[V[cs_cnt]]++;
+                            X_temp[V[crit_cnt]]++;
                         }
                     }
                     rxn_cnt = 0;
