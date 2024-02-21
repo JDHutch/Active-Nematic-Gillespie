@@ -320,8 +320,6 @@ int main(int argc, char **argv){
 
             if(tau_prime < zeta/a0){
 
-                //printf("What's the fucking point\n");
-
                 r1 = dsfmt_genrand_open_open(&dsfmt);
                 r2 = dsfmt_genrand_open_open(&dsfmt);
 
